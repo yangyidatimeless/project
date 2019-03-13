@@ -1,0 +1,25 @@
+test:
+  service:
+    uri: lb://test-service/
+user:
+  service:
+    uri: lb://user-service/
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: testService
+        uri: lb://test-service
+        predicates:
+        - Path=/web/**
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:7001/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+
